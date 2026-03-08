@@ -4,12 +4,14 @@ import React, { useState } from 'react';
 import { Card } from './Card';
 import { Input } from './Input';
 import { Button } from './Button';
+import { BookingModal } from './BookingModal';
 import { Sparkles, Loader2, CheckCircle2 } from 'lucide-react';
 import './GenerationForm.css';
 
 export function GenerationForm() {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [showBookingMock, setShowBookingMock] = useState(false);
 
     const [formData, setFormData] = useState({
         businessName: '',
@@ -72,8 +74,13 @@ export function GenerationForm() {
                                 </div>
                                 <h3>Generation Complete!</h3>
                                 <p>We've created a stunning mock website for <strong>{formData.businessName || 'Your Business'}</strong>.</p>
-                                <Button fullWidth className="mt-6" variant="primary">
-                                    Preview Your Website
+                                <Button
+                                    fullWidth
+                                    className="mt-6"
+                                    variant="primary"
+                                    onClick={() => setShowBookingMock(true)}
+                                >
+                                    Preview Booking Flow (Mock)
                                 </Button>
                             </div>
                         ) : (
@@ -143,6 +150,14 @@ export function GenerationForm() {
 
             {/* Background Decor */}
             <div className="form-blob"></div>
+
+            {/* Demo Booking Modal triggered after an AI Website is generated */}
+            <BookingModal
+                isOpen={showBookingMock}
+                onClose={() => setShowBookingMock(false)}
+                serviceName="Emergency Plumbing Call-out"
+                depositAmount={50}
+            />
         </section>
     );
 }
