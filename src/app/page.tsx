@@ -3,14 +3,23 @@ import { Hero } from '@/components/Hero';
 import { Features } from '@/components/Features';
 import { HowItWorks } from '@/components/HowItWorks';
 import { GenerationForm } from '@/components/GenerationForm';
+import { BlogSection } from '@/components/BlogSection';
+import { SchemaInjector } from '@/components/SchemaInjector';
 
 export default function Home() {
   return (
     <main>
+      <SchemaInjector
+        businessName="Trade Genie Demo Site"
+        industry="Plumbing"
+        phone="+44 7700 900077"
+        url="https://tradegeniedemo.com"
+      />
       <Navbar />
       <Hero />
       <Features />
       <HowItWorks />
+      <BlogSection />
       <GenerationForm />
 
       <footer style={{
