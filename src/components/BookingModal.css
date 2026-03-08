@@ -1,0 +1,159 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal-container {
+    width: 100%;
+    max-width: 500px;
+}
+
+.modal-card {
+    position: relative;
+    padding: 2rem !important;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+.modal-header {
+    margin-bottom: 2rem;
+    padding-right: 2rem;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.modal-subtitle {
+    color: var(--accent-primary);
+    font-weight: 500;
+}
+
+.payment-summary {
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+}
+
+.mock-stripe-element {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.stripe-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.stripe-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stripe-value {
+    font-family: monospace;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+}
+
+.back-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    text-decoration: underline;
+    color: var(--text-primary);
+}
+
+.success-step {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.success-icon-large {
+    display: inline-flex;
+    margin-bottom: 1.5rem;
+}
+
+.success-title {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.success-text {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.tradesperson-view {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 1px dashed var(--accent-primary);
+    background: rgba(99, 102, 241, 0.05);
+    text-align: left;
+}
+
+.tradesperson-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.tradesperson-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
