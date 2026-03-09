@@ -18,6 +18,8 @@ export function BookingModal({ isOpen, onClose, serviceName, depositAmount }: Bo
     const [step, setStep] = useState<1 | 2 | 3>(1);
     const [loading, setLoading] = useState(false);
     const [quoteLink, setQuoteLink] = useState('');
+    const [reviewLink, setReviewLink] = useState('');
+    const [sendingReview, setSendingReview] = useState(false);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -78,6 +80,29 @@ export function BookingModal({ isOpen, onClose, serviceName, depositAmount }: Bo
             console.error('Payment intent failed', error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleMarkJobComplete = async () => {
+        setSendingReview(true);
+        try {
+            const res = await fetch('/api/reviews/request', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    customerName: formData.name || 'Valued Customer',
+                    customerPhone: formData.phone || '+447000000000',
+                    businessName: 'Trade Genie Services'
+                })
+            });
+            const data = await res.json();
+            if (data.manualReviewLink) {
+                setReviewLink(data.manualReviewLink);
+            }
+        } catch (error) {
+            console.error('Review sync failed', error);
+        } finally {
+            setSendingReview(false);
         }
     };
 
@@ -166,12 +191,37 @@ export function BookingModal({ isOpen, onClose, serviceName, depositAmount }: Bo
                                 <p className="success-text">Your deposit has been paid securely via Stripe. The tradesperson has been notified instantly via WhatsApp.</p>
 
                                 {quoteLink && (
-                                    <div className="tradesperson-view glass">
+                                    <div className="tradesperson-view glass mb-4">
                                         <p className="tradesperson-label">tradesperson view preview</p>
                                         <p className="tradesperson-desc">The business owner received your lead and can reply instantly with a quote using this auto-generated WhatsApp link:</p>
                                         <a href={quoteLink} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm btn-full" style={{ marginTop: '0.5rem' }}>
                                             <MessageCircle size={16} className="btn-icon-left" /> Send Quote via WhatsApp
                                         </a>
+                                    </div>
+                                )}
+
+                                {quoteLink && (
+                                    <div className="tradesperson-view glass" style={{ borderColor: 'rgba(16, 185, 129, 0.3)', background: 'rgba(16, 185, 129, 0.05)' }}>
+                                        <p className="tradesperson-label" style={{ color: 'var(--success-color)' }}>admin simulation: 3 days later</p>
+                                        <p className="tradesperson-desc">Simulate marking the job as "Complete" to trigger the automated WhatsApp review request flow.</p>
+
+                                        {!reviewLink ? (
+                                            <Button
+                                                fullWidth
+                                                size="sm"
+                                                onClick={handleMarkJobComplete}
+                                                disabled={sendingReview}
+                                            >
+                                                {sendingReview ? 'Processing...' : 'Mark Job Complete'}
+                                            </Button>
+                                        ) : (
+                                            <div className="fade-in mt-3">
+                                                <p className="text-sm text-secondary mb-2">Automated system generated this "1-click review link" sent to the customer:</p>
+                                                <a href={reviewLink} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm btn-full" style={{ background: '#25D366' }}>
+                                                    <MessageCircle size={16} className="btn-icon-left" /> View Review Prompt
+                                                </a>
+                                            </div>
+                                        )}
                                     </div>
                                 )}
                             </div>

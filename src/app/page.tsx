@@ -2,6 +2,7 @@ import { Navbar } from '@/components/Navbar';
 import { Hero } from '@/components/Hero';
 import { Features } from '@/components/Features';
 import { HowItWorks } from '@/components/HowItWorks';
+import { ReviewCarousel } from '@/components/ReviewCarousel';
 import { GenerationForm } from '@/components/GenerationForm';
 import { BlogSection } from '@/components/BlogSection';
 import { SchemaInjector } from '@/components/SchemaInjector';
@@ -19,6 +20,7 @@ export default function Home() {
       <Hero />
       <Features />
       <HowItWorks />
+      <ReviewCarousel />
       <BlogSection />
       <GenerationForm />
 
