@@ -5,6 +5,7 @@ import { HowItWorks } from '@/components/HowItWorks';
 import { ReviewCarousel } from '@/components/ReviewCarousel';
 import { GenerationForm } from '@/components/GenerationForm';
 import { BlogSection } from '@/components/BlogSection';
+import { WeeklyReport } from '@/components/WeeklyReport';
 import { SchemaInjector } from '@/components/SchemaInjector';
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
       <HowItWorks />
       <ReviewCarousel />
       <BlogSection />
+      <WeeklyReport />
       <GenerationForm />
 
       <footer style={{
