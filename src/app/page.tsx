@@ -6,6 +6,7 @@ import { ReviewCarousel } from '@/components/ReviewCarousel';
 import { GenerationForm } from '@/components/GenerationForm';
 import { BlogSection } from '@/components/BlogSection';
 import { WeeklyReport } from '@/components/WeeklyReport';
+import { ServiceAreaGrid } from '@/components/ServiceAreaGrid';
 import { SchemaInjector } from '@/components/SchemaInjector';
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
       <Features />
       <HowItWorks />
       <ReviewCarousel />
+      <ServiceAreaGrid />
       <BlogSection />
       <WeeklyReport />
       <GenerationForm />
