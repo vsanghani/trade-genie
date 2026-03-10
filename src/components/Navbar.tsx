@@ -27,7 +27,7 @@ export function Navbar() {
                 <div className="navbar-links">
                     <a href="#features" className="nav-link">Features</a>
                     <a href="#how-it-works" className="nav-link">How it Works</a>
-                    <a href="#pricing" className="nav-link">Pricing</a>
+                    <a href="/pricing" className="nav-link">Pricing</a>
                 </div>
 
                 <div className="navbar-actions">
