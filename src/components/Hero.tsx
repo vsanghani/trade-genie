@@ -26,12 +26,16 @@ export function Hero() {
                     </p>
 
                     <div className="hero-cta-group">
-                        <Button size="lg" rightIcon={<ArrowRight size={20} />}>
-                            Generate My Website
-                        </Button>
-                        <Button variant="outline" size="lg">
-                            See How It Works
-                        </Button>
+                        <a href="/pricing">
+                            <Button size="lg" rightIcon={<ArrowRight size={20} />}>
+                                View Pricing
+                            </Button>
+                        </a>
+                        <a href="#generate">
+                            <Button variant="outline" size="lg">
+                                Generate My Website
+                            </Button>
+                        </a>
                     </div>
 
                     <div className="hero-stats">
