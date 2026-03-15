@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server';
 import { sanitizeString, getMissingFields } from '@/lib/validation';
+import { requireAuth } from '@/lib/auth';
 
 export async function POST(req: Request) {
     try {
+        // ---- Authentication ----
+        const auth = await requireAuth();
+        if (!auth.authenticated) return auth.response;
+
         const body = await req.json();
 
         // ---- Input Validation ----
