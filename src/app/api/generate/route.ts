@@ -1,9 +1,30 @@
 import { NextResponse } from 'next/server';
+import { sanitizeString, isValidPhone, getMissingFields } from '@/lib/validation';
 
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { businessName, industry, phone, description } = body;
+
+        // ---- Input Validation ----
+        const missing = getMissingFields(['businessName', 'industry', 'phone', 'description'], body);
+        if (missing.length > 0) {
+            return NextResponse.json(
+                { success: false, error: `Missing required fields: ${missing.join(', ')}` },
+                { status: 400 }
+            );
+        }
+
+        if (!isValidPhone(String(body.phone))) {
+            return NextResponse.json(
+                { success: false, error: 'Invalid phone number format.' },
+                { status: 400 }
+            );
+        }
+
+        const businessName = sanitizeString(body.businessName, 200);
+        const industry = sanitizeString(body.industry, 100);
+        const phone = sanitizeString(body.phone, 20);
+        const description = sanitizeString(body.description, 1000);
 
         // Simulate AI Processing Time
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -31,9 +52,10 @@ export async function POST(req: Request) {
         });
 
     } catch (error) {
+        console.error('Generate Error:', error);
         return NextResponse.json({
             success: false,
-            error: 'Failed to generate website'
+            error: 'Failed to generate website. Please try again later.'
         }, { status: 500 });
     }
 }

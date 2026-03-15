@@ -1,9 +1,22 @@
 import { NextResponse } from 'next/server';
+import { sanitizeString, getMissingFields } from '@/lib/validation';
 
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { industry, location = 'your area', businessName = 'this business' } = body;
+
+        // ---- Input Validation ----
+        const missing = getMissingFields(['industry'], body);
+        if (missing.length > 0) {
+            return NextResponse.json(
+                { success: false, error: `Missing required fields: ${missing.join(', ')}` },
+                { status: 400 }
+            );
+        }
+
+        const industry = sanitizeString(body.industry, 100);
+        const location = sanitizeString(body.location || 'your area', 200);
+        const businessName = sanitizeString(body.businessName || 'this business', 200);
 
         // Simulate AI Generation Delay
         await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -42,10 +55,10 @@ export async function POST(req: Request) {
             data: mockBlogs,
             message: 'Generated localized SEO blog posts successfully.',
         });
-    } catch (error: any) {
+    } catch (error) {
         console.error('Blog Generation Error:', error);
         return NextResponse.json(
-            { success: false, error: 'Failed to generate blog posts' },
+            { success: false, error: 'Failed to generate blog posts. Please try again later.' },
             { status: 500 }
         );
     }

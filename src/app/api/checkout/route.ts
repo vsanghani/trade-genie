@@ -1,13 +1,46 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { sanitizeString, isValidEmail, getMissingFields, isPositiveNumber } from '@/lib/validation';
 
-// Initialize Stripe with a dummy key for development/mocking purposes.
-const stripe = new Stripe('sk_test_mock_dummy_key_12345');
+// Initialize Stripe with a key from environment variables.
+// In development, set STRIPE_SECRET_KEY in .env.local
+// In production, set it via your hosting provider's environment config.
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error('STRIPE_SECRET_KEY environment variable is not set. See .env.example for required variables.');
+}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { service, price, customerEmail, businessId } = body;
+
+    // ---- Input Validation ----
+    const missing = getMissingFields(['service', 'customerEmail', 'businessId'], body);
+    if (missing.length > 0) {
+      return NextResponse.json(
+        { success: false, error: `Missing required fields: ${missing.join(', ')}` },
+        { status: 400 }
+      );
+    }
+
+    if (!isPositiveNumber(body.price)) {
+      return NextResponse.json(
+        { success: false, error: 'Price must be a positive number.' },
+        { status: 400 }
+      );
+    }
+
+    if (!isValidEmail(String(body.customerEmail))) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid email address.' },
+        { status: 400 }
+      );
+    }
+
+    const service = sanitizeString(body.service, 200);
+    const price = body.price;
+    const customerEmail = sanitizeString(body.customerEmail, 254);
+    const businessId = sanitizeString(body.businessId, 100);
 
     // We are mocking the Stripe Checkout Session creation since we don't have
     // real API keys configured in the environment yet.
@@ -54,11 +87,11 @@ export async function POST(req: Request) {
       message: 'Deposit checkout session created successfully.'
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Stripe Checkout Error:', error);
     return NextResponse.json({
       success: false,
-      error: error.message || 'Internal Server Error'
+      error: 'An internal error occurred. Please try again later.'
     }, { status: 500 });
   }
 }
