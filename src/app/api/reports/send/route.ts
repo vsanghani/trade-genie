@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth';
 
 export async function POST(req: Request) {
     try {
+        // ---- Authentication ----
+        const auth = await requireAuth();
+        if (!auth.authenticated) return auth.response;
+
         const body = await req.json();
         const { businessOwnerName, businessOwnerPhone, stats } = body;
 

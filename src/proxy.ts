@@ -84,13 +84,24 @@ function isValidOrigin(request: NextRequest): boolean {
 }
 
 // =============================================================================
-// Middleware
+// Proxy
 // =============================================================================
+
+// Routes that require authentication (business-owner-only endpoints)
+const PROTECTED_PREFIXES = [
+  '/api/reports',
+  '/api/reviews/request',
+  '/api/generate-blog',
+];
+
+function isProtectedRoute(pathname: string): boolean {
+  return PROTECTED_PREFIXES.some(prefix => pathname.startsWith(prefix));
+}
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Only apply rate limiting and CSRF to API routes
+  // Only apply rate limiting, CSRF, and auth to API routes
   if (!pathname.startsWith('/api')) {
     return NextResponse.next();
   }
@@ -105,6 +116,24 @@ export function proxy(request: NextRequest) {
       { success: false, error: 'Too many requests. Please try again later.' },
       { status: 429 }
     );
+  }
+
+  // --- Auth cookie fast-fail for protected routes ---
+  if (isProtectedRoute(pathname)) {
+    // Check if any Supabase auth cookie is present.
+    // This is a fast-fail optimization — the real verification happens in
+    // requireAuth() inside the route handler via supabase.auth.getUser().
+    const cookies = request.cookies.getAll();
+    const hasAuthCookie = cookies.some(c =>
+      c.name.startsWith('sb-') && c.name.endsWith('-auth-token')
+    );
+
+    if (!hasAuthCookie) {
+      return NextResponse.json(
+        { success: false, error: 'Authentication required.' },
+        { status: 401 }
+      );
+    }
   }
 
   // --- CSRF / Origin protection for mutations ---

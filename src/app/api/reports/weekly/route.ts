@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth';
 
 export async function GET() {
     try {
+        // ---- Authentication ----
+        const auth = await requireAuth();
+        if (!auth.authenticated) return auth.response;
+
         // In production, this would aggregate data from:
         // - Vercel Analytics (page views, unique visitors)
         // - Supabase (leads generated, bookings completed)
