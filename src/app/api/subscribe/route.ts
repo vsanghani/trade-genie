@@ -45,8 +45,8 @@ export async function POST(req: Request) {
 
         const plans: Record<string, { name: string; monthlyPrice: number }> = {
             free: { name: 'Free', monthlyPrice: 0 },
-            pro: { name: 'Pro', monthlyPrice: 29 },
-            enterprise: { name: 'Enterprise', monthlyPrice: 79 },
+            pro: { name: 'Pro', monthlyPrice: 59 },
+            enterprise: { name: 'Enterprise', monthlyPrice: 159 },
         };
 
         const plan = plans[planId]!;
@@ -58,7 +58,7 @@ export async function POST(req: Request) {
         // Simulate processing delay
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        console.log(`[Stripe Sub Mock] ${email || 'anonymous'} → ${plan.name} (${billingCycle}) at £${price}`);
+        console.log(`[Stripe Sub Mock] ${email || 'anonymous'} → ${plan.name} (${billingCycle}) at A$${price}`);
 
         return NextResponse.json({
             success: true,
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
             plan: plan.name,
             billingCycle,
             price,
-            currency: 'gbp',
+            currency: 'aud',
             message: `Subscription to ${plan.name} (${billingCycle}) initiated successfully.`,
             checkoutUrl: '/subscription-success-mock',
         });

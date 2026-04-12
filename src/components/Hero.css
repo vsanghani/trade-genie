@@ -107,7 +107,8 @@
     left: 5%;
     transform: rotate(-15deg);
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(255, 255, 255, 0.05));
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(36px);
+    -webkit-backdrop-filter: blur(36px);
 }
 
 .shape-2 {
@@ -118,6 +119,8 @@
     transform: rotate(25deg);
     background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(255, 255, 255, 0.05));
     animation-delay: -3s;
+    backdrop-filter: blur(36px);
+    -webkit-backdrop-filter: blur(36px);
 }
 
 .shape-3 {
@@ -128,6 +131,8 @@
     border-radius: 50%;
     background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(255, 255, 255, 0.05));
     animation-delay: -6s;
+    backdrop-filter: blur(36px);
+    -webkit-backdrop-filter: blur(36px);
 }
 
 @keyframes fadeUp {

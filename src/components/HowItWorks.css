@@ -4,6 +4,10 @@
     z-index: 5;
 }
 
+.hiw-section--standalone {
+    padding-top: 8rem;
+}
+
 .hiw-container {
     padding: 4rem;
     display: grid;

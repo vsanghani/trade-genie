@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { PricingCard } from '@/components/PricingCard';
 import { PricingToggle } from '@/components/PricingToggle';
+import { SiteFooter } from '@/components/SiteFooter';
 import { Shield } from 'lucide-react';
 
 const plans = [
@@ -25,8 +26,8 @@ const plans = [
         planId: 'pro',
         name: 'Pro',
         description: 'Everything you need to grow. The most popular plan for active tradespeople.',
-        monthlyPrice: 29,
-        annualPrice: 278,
+        monthlyPrice: 59,
+        annualPrice: 566,
         cta: 'Start Pro Trial',
         highlighted: true,
         features: [
@@ -42,8 +43,8 @@ const plans = [
         planId: 'enterprise',
         name: 'Enterprise',
         description: 'For established businesses scaling fast. Full-service white-label solution.',
-        monthlyPrice: 79,
-        annualPrice: 758,
+        monthlyPrice: 159,
+        annualPrice: 1526,
         cta: 'Contact Sales',
         features: [
             'Unlimited AI websites',
@@ -73,6 +74,7 @@ export default function PricingPage() {
                         <p className="section-subtitle">
                             No hidden fees. No contracts. Cancel anytime. Start free and upgrade when you&apos;re ready to grow.
                         </p>
+                        <p className="pricing-currency-note">All prices in Australian dollars (AUD), inclusive of GST where applicable.</p>
                     </div>
 
                     <PricingToggle isAnnual={isAnnual} onToggle={() => setIsAnnual(!isAnnual)} />
@@ -92,15 +94,7 @@ export default function PricingPage() {
                 </div>
             </section>
 
-            <footer style={{
-                textAlign: 'center',
-                padding: '3rem',
-                borderTop: '1px solid var(--border-color)',
-                color: 'var(--text-secondary)',
-                fontSize: '0.875rem'
-            }}>
-                <p>&copy; {new Date().getFullYear()} TradeGenie. All rights reserved.</p>
-            </footer>
+            <SiteFooter />
         </main>
     );
 }

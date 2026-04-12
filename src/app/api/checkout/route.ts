@@ -51,7 +51,7 @@ export async function POST(req: Request) {
       line_items: [
         {
           price_data: {
-            currency: 'gbp',
+            currency: 'aud',
             product_data: {
               name: `${service} Deposit`,
               description: `Booking deposit for ${service}`,
@@ -75,7 +75,7 @@ export async function POST(req: Request) {
     */
 
     // MOCK RESPONSE for UI Development
-    console.log(`[Stripe Mock] Created session for ${service} at £${price}`);
+    console.log(`[Stripe Mock] Created session for ${service} at A$${price}`);
 
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 1500));

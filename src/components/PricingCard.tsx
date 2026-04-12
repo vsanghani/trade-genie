@@ -6,6 +6,13 @@ import { Button } from './Button';
 import { Check, Sparkles, Loader2 } from 'lucide-react';
 import './PricingCard.css';
 
+const aud = new Intl.NumberFormat('en-AU', {
+    style: 'currency',
+    currency: 'AUD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+});
+
 interface PricingCardProps {
     name: string;
     description: string;
@@ -80,15 +87,14 @@ export function PricingCard({
                     <span className="price-amount">Free</span>
                 ) : (
                     <>
-                        <span className="price-currency">£</span>
-                        <span className="price-amount">{perMonth}</span>
+                        <span className="price-amount">{aud.format(perMonth)}</span>
                         <span className="price-period">/mo</span>
                     </>
                 )}
             </div>
 
             {isAnnual && monthlyPrice > 0 && (
-                <p className="annual-total">£{price} billed annually</p>
+                <p className="annual-total">{aud.format(price)} billed annually</p>
             )}
 
             <ul className="feature-list">
