@@ -8,6 +8,7 @@ import { BlogSection } from '@/components/BlogSection';
 import { WeeklyReport } from '@/components/WeeklyReport';
 import { ServiceAreaGrid } from '@/components/ServiceAreaGrid';
 import { SchemaInjector } from '@/components/SchemaInjector';
+import { SiteFooter } from '@/components/SiteFooter';
 
 export default function Home() {
   return (
@@ -15,7 +16,7 @@ export default function Home() {
       <SchemaInjector
         businessName="Trade Genie Demo Site"
         industry="Plumbing"
-        phone="+44 7700 900077"
+        phone="+61 400 000 000"
         url="https://tradegeniedemo.com"
       />
       <Navbar />
@@ -27,16 +28,7 @@ export default function Home() {
       <BlogSection />
       <WeeklyReport />
       <GenerationForm />
-
-      <footer style={{
-        textAlign: 'center',
-        padding: '3rem',
-        borderTop: '1px solid var(--border-color)',
-        color: 'var(--text-secondary)',
-        fontSize: '0.875rem'
-      }}>
-        <p>&copy; {new Date().getFullYear()} TradeGenie. All rights reserved.</p>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

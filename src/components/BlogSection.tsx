@@ -27,7 +27,7 @@ export function BlogSection() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         industry: 'Plumbing',
-                        location: 'London',
+                        location: 'Hobart',
                         businessName: 'Trade Genie Demo'
                     })
                 });

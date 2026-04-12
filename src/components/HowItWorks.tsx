@@ -22,9 +22,14 @@ const steps = [
     }
 ];
 
-export function HowItWorks() {
+interface HowItWorksProps {
+    /** Extra top spacing when there is no hero above (standalone route). */
+    standalone?: boolean;
+}
+
+export function HowItWorks({ standalone = false }: HowItWorksProps) {
     return (
-        <section id="how-it-works" className="hiw-section">
+        <section id="how-it-works" className={`hiw-section ${standalone ? 'hiw-section--standalone' : ''}`}>
             <div className="container">
 
                 <div className="hiw-container glass-panel">

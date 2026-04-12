@@ -28,12 +28,12 @@ export function Hero() {
                     <div className="hero-cta-group">
                         <a href="/pricing">
                             <Button size="lg" rightIcon={<ArrowRight size={20} />}>
-                                View Pricing
+                                View pricing
                             </Button>
                         </a>
                         <a href="#generate">
                             <Button variant="outline" size="lg">
-                                Generate My Website
+                                Generate my website
                             </Button>
                         </a>
                     </div>
@@ -46,12 +46,12 @@ export function Hero() {
                         <div className="stat-divider"></div>
                         <div className="stat-item">
                             <span className="stat-value text-gradient">100%</span>
-                            <span className="stat-label">Automated Leads</span>
+                            <span className="stat-label">Automated leads</span>
                         </div>
                         <div className="stat-divider"></div>
                         <div className="stat-item">
                             <span className="stat-value text-gradient">Zero</span>
-                            <span className="stat-label">Coding Required</span>
+                            <span className="stat-label">Coding required</span>
                         </div>
                     </div>
                 </div>

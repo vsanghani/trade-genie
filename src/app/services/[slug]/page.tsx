@@ -5,14 +5,14 @@ import { ServiceAreaHero } from '@/components/ServiceAreaHero';
 
 // The mock data — in production this would come from a DB call
 const SERVICE_AREAS = [
-    { slug: 'plumber-in-richmond', trade: 'Plumber', suburb: 'Richmond', description: 'Fast, reliable plumbing services across Richmond for homes and businesses.', demandLevel: 'High' as const, population: '28,000' },
-    { slug: 'plumber-in-south-yarra', trade: 'Plumber', suburb: 'South Yarra', description: 'Expert plumbing repairs, installations, and emergency callouts in South Yarra.', demandLevel: 'High' as const, population: '24,000' },
-    { slug: 'plumber-in-hawthorn', trade: 'Plumber', suburb: 'Hawthorn', description: 'Trusted local plumber serving Hawthorn households for over a decade.', demandLevel: 'Medium' as const, population: '22,000' },
-    { slug: 'plumber-in-collingwood', trade: 'Plumber', suburb: 'Collingwood', description: 'Same-day plumbing service in Collingwood. No callout fee.', demandLevel: 'Medium' as const, population: '10,000' },
-    { slug: 'plumber-in-fitzroy', trade: 'Plumber', suburb: 'Fitzroy', description: 'Professional plumbing solutions in Fitzroy — from leaks to full renovations.', demandLevel: 'Medium' as const, population: '11,000' },
-    { slug: 'electrician-in-richmond', trade: 'Electrician', suburb: 'Richmond', description: 'Licensed electricians serving Richmond for residential and commercial jobs.', demandLevel: 'High' as const, population: '28,000' },
-    { slug: 'electrician-in-south-yarra', trade: 'Electrician', suburb: 'South Yarra', description: 'Reliable electrical services in South Yarra — safety checks, rewiring, and more.', demandLevel: 'Medium' as const, population: '24,000' },
-    { slug: 'roofer-in-richmond', trade: 'Roofer', suburb: 'Richmond', description: 'Roof repairs, replacements, and inspections across Richmond.', demandLevel: 'Low' as const, population: '28,000' },
+    { slug: 'plumber-in-sandy-bay', trade: 'Plumber', suburb: 'Sandy Bay', description: 'Fast, reliable plumbing for Sandy Bay homes and businesses — from emergency leaks to full fit-outs.', demandLevel: 'High' as const, population: '12,000' },
+    { slug: 'plumber-in-battery-point', trade: 'Plumber', suburb: 'Battery Point', description: 'Careful plumbing work in heritage Battery Point properties, plus same-day callouts across Hobart.', demandLevel: 'High' as const, population: '2,500' },
+    { slug: 'plumber-in-west-hobart', trade: 'Plumber', suburb: 'West Hobart', description: 'Trusted local plumber for West Hobart — blocked drains, hot water, and bathroom upgrades.', demandLevel: 'Medium' as const, population: '6,500' },
+    { slug: 'plumber-in-moonah', trade: 'Plumber', suburb: 'Moonah', description: 'Same-day plumbing in Moonah and Glenorchy — no-nonsense pricing and tidy workmanship.', demandLevel: 'Medium' as const, population: '5,500' },
+    { slug: 'plumber-in-kingston', trade: 'Plumber', suburb: 'Kingston', description: 'Kingston and Channel area plumbing — renovations, gas fitting, and emergency repairs.', demandLevel: 'High' as const, population: '11,000' },
+    { slug: 'electrician-in-glenorchy', trade: 'Electrician', suburb: 'Glenorchy', description: 'Licensed electricians for Glenorchy — switchboards, safety switches, and commercial fit-outs.', demandLevel: 'High' as const, population: '15,000' },
+    { slug: 'electrician-in-new-town', trade: 'Electrician', suburb: 'New Town', description: 'Residential and light commercial electrical work across New Town and northern Hobart.', demandLevel: 'Medium' as const, population: '5,500' },
+    { slug: 'roofer-in-bellerive', trade: 'Roofer', suburb: 'Bellerive', description: 'Roof repairs and replacements on the Eastern Shore — Bellerive, wind exposure, and coastal conditions covered.', demandLevel: 'Medium' as const, population: '4,500' },
 ];
 
 // Pre-render all known service area pages at build time for maximum SEO

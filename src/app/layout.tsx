@@ -3,7 +3,8 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Trade Genie | Websites & Leads for Local Businesses',
-  description: 'AI-generated stunning websites for sole traders and small businesses. Get bookings directly to your WhatsApp.',
+  description:
+    'AI-generated websites for Australian sole traders and small businesses. Pricing in AUD. Bookings straight to your WhatsApp.',
 };
 
 export default function RootLayout({

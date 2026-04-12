@@ -46,7 +46,7 @@ export function GenerationForm() {
     };
 
     return (
-        <section id="onboarding" className="gen-form-section">
+        <section id="generate" className="gen-form-section">
             <div className="container">
                 <div className="gen-form-wrapper">
 
