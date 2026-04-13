@@ -47,7 +47,7 @@ export async function GET() {
             message: 'Fetched latest 5-star Google Reviews successfully.',
         });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Review Sync Error:', error);
         return NextResponse.json({
             success: false,

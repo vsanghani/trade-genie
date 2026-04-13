@@ -32,7 +32,7 @@ export async function POST(req: Request) {
             simulatedMessage: message,
             whatsappLink,
         });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Report Send Error:', error);
         return NextResponse.json(
             { success: false, error: 'Failed to send weekly report' },

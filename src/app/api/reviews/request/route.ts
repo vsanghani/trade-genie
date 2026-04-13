@@ -29,7 +29,7 @@ export async function POST(req: Request) {
             manualReviewLink: manualReviewLink
         });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Review Request Error:', error);
         return NextResponse.json({
             success: false,

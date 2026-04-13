@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Button } from './Button';
 import './Navbar.css';
 
@@ -19,10 +20,10 @@ export function Navbar() {
     return (
         <nav className={`navbar ${scrolled ? 'navbar-scrolled glass' : ''}`}>
             <div className="container navbar-container">
-                <a href="/" className="navbar-logo">
+                <Link href="/" className="navbar-logo">
                     <div className="logo-icon glass">TG</div>
                     <span className="logo-text">Trade<span className="text-gradient">Genie</span></span>
-                </a>
+                </Link>
 
                 <div className="navbar-links">
                     <a href="/features" className="nav-link">Features</a>
