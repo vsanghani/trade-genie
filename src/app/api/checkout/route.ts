@@ -38,14 +38,18 @@ export async function POST(req: Request) {
     }
 
     const service = sanitizeString(body.service, 200);
-    const price = body.price;
+    const price = Number(body.price);
     const customerEmail = sanitizeString(body.customerEmail, 254);
     const businessId = sanitizeString(body.businessId, 100);
+    const origin = req.headers.get('origin');
 
-    // We are mocking the Stripe Checkout Session creation since we don't have
-    // real API keys configured in the environment yet.
+    if (!origin) {
+      return NextResponse.json(
+        { success: false, error: 'Request origin is required.' },
+        { status: 400 }
+      );
+    }
 
-    /* PRODUCTION IMPLEMENTATION:
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -56,36 +60,29 @@ export async function POST(req: Request) {
               name: `${service} Deposit`,
               description: `Booking deposit for ${service}`,
             },
-            unit_amount: price * 100, // Stripe expects amounts in pence/cents
+            unit_amount: Math.round(price * 100), // Stripe expects minor units
           },
           quantity: 1,
         },
       ],
       mode: 'payment',
-      success_url: `${req.headers.get('origin')}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.get('origin')}/booking-cancelled`,
+      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/booking-cancelled`,
       customer_email: customerEmail,
       metadata: {
         businessId,
         serviceType: service
-      }
+      },
     });
-    
-    return NextResponse.json({ url: session.url });
-    */
 
-    // MOCK RESPONSE for UI Development
-    console.log(`[Stripe Mock] Created session for ${service} at A$${price}`);
+    if (!session.url) {
+      return NextResponse.json(
+        { success: false, error: 'Stripe checkout session did not return a URL.' },
+        { status: 500 }
+      );
+    }
 
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    return NextResponse.json({
-      success: true,
-      mock: true,
-      url: '/payment-success-mock', // We will route to a mock success page
-      message: 'Deposit checkout session created successfully.'
-    });
+    return NextResponse.json({ success: true, url: session.url });
 
   } catch (error: unknown) {
     console.error('Stripe Checkout Error:', error);

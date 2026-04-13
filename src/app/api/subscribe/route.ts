@@ -1,5 +1,22 @@
 import { NextResponse } from 'next/server';
+import Stripe from 'stripe';
 import { sanitizeString, isValidEmail, getMissingFields, isOneOf } from '@/lib/validation';
+
+if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error('STRIPE_SECRET_KEY environment variable is not set. See .env.example for required variables.');
+}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+const PRICE_ID_ENV_MAP = {
+    pro: {
+        monthly: 'STRIPE_PRICE_ID_PRO_MONTHLY',
+        annual: 'STRIPE_PRICE_ID_PRO_ANNUAL',
+    },
+    enterprise: {
+        monthly: 'STRIPE_PRICE_ID_ENTERPRISE_MONTHLY',
+        annual: 'STRIPE_PRICE_ID_ENTERPRISE_ANNUAL',
+    },
+} as const;
 
 export async function POST(req: Request) {
     try {
@@ -17,6 +34,7 @@ export async function POST(req: Request) {
         const planId = sanitizeString(body.planId, 50);
         const billingCycle = sanitizeString(body.billingCycle, 20);
         const email = sanitizeString(body.email || '', 254);
+        const origin = req.headers.get('origin');
 
         if (!isOneOf(planId, ['free', 'pro', 'enterprise'])) {
             return NextResponse.json(
@@ -39,38 +57,59 @@ export async function POST(req: Request) {
             );
         }
 
-        // In production, this would create a real Stripe Checkout Session
-        // for a recurring subscription using stripe.checkout.sessions.create()
-        // with mode: 'subscription' and the appropriate price ID.
+        if (!origin) {
+            return NextResponse.json(
+                { success: false, error: 'Request origin is required.' },
+                { status: 400 }
+            );
+        }
 
-        const plans: Record<string, { name: string; monthlyPrice: number }> = {
-            free: { name: 'Free', monthlyPrice: 0 },
-            pro: { name: 'Pro', monthlyPrice: 59 },
-            enterprise: { name: 'Enterprise', monthlyPrice: 159 },
-        };
+        if (planId === 'free') {
+            return NextResponse.json({
+                success: true,
+                plan: 'Free',
+                billingCycle,
+                message: 'No checkout needed for the free plan.',
+                checkoutUrl: `${origin}/subscription-success-mock`,
+            });
+        }
 
-        const plan = plans[planId]!;
+        const envKey = PRICE_ID_ENV_MAP[planId as 'pro' | 'enterprise'][billingCycle as 'monthly' | 'annual'];
+        const priceId = process.env[envKey];
 
-        const price = billingCycle === 'annual'
-            ? Math.round(plan.monthlyPrice * 12 * 0.8) // 20% discount
-            : plan.monthlyPrice;
+        if (!priceId) {
+            return NextResponse.json(
+                { success: false, error: `Stripe price ID missing: ${envKey}` },
+                { status: 500 }
+            );
+        }
 
-        // Simulate processing delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        const session = await stripe.checkout.sessions.create({
+            mode: 'subscription',
+            line_items: [{ price: priceId, quantity: 1 }],
+            success_url: `${origin}/subscription-success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${origin}/pricing`,
+            customer_email: email || undefined,
+            metadata: {
+                planId,
+                billingCycle,
+            },
+        });
 
-        console.log(`[Stripe Sub Mock] ${email || 'anonymous'} → ${plan.name} (${billingCycle}) at A$${price}`);
+        if (!session.url) {
+            return NextResponse.json(
+                { success: false, error: 'Stripe subscription session did not return a URL.' },
+                { status: 500 }
+            );
+        }
 
         return NextResponse.json({
             success: true,
-            mock: true,
-            plan: plan.name,
+            plan: planId,
             billingCycle,
-            price,
-            currency: 'aud',
-            message: `Subscription to ${plan.name} (${billingCycle}) initiated successfully.`,
-            checkoutUrl: '/subscription-success-mock',
+            checkoutUrl: session.url,
         });
-    } catch (error) {
+    } catch (error: unknown) {
         console.error('Subscribe Error:', error);
         return NextResponse.json(
             { success: false, error: 'Subscription failed. Please try again later.' },
