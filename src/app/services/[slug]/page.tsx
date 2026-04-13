@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
 import { ServiceAreaHero } from '@/components/ServiceAreaHero';
 
@@ -50,7 +51,7 @@ export default async function ServiceAreaPage({ params }: { params: Promise<{ sl
                     <div className="container">
                         <h1 className="section-title">Service area not found</h1>
                         <p className="section-subtitle">The page you&apos;re looking for doesn&apos;t exist.</p>
-                        <a href="/" className="btn btn-primary" style={{ marginTop: '2rem', display: 'inline-block' }}>Back to Home</a>
+                        <Link href="/" className="btn btn-primary" style={{ marginTop: '2rem', display: 'inline-block' }}>Back to Home</Link>
                     </div>
                 </section>
             </main>

@@ -40,7 +40,7 @@ export async function GET() {
             success: true,
             data: weeklyReport,
         });
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Weekly Report Error:', error);
         return NextResponse.json(
             { success: false, error: 'Failed to generate weekly report' },

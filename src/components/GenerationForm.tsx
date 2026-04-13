@@ -73,7 +73,7 @@ export function GenerationForm() {
                                     <Sparkles size={32} className="success-icon text-gradient" />
                                 </div>
                                 <h3>Generation Complete!</h3>
-                                <p>We've created a stunning mock website for <strong>{formData.businessName || 'Your Business'}</strong>.</p>
+                                <p>We&apos;ve created a stunning mock website for <strong>{formData.businessName || 'Your Business'}</strong>.</p>
                                 <Button
                                     fullWidth
                                     className="mt-6"

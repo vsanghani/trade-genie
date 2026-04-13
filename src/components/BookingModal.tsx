@@ -44,7 +44,7 @@ export function BookingModal({ isOpen, onClose, serviceName, depositAmount }: Bo
 
         try {
             // 1. Simulate Stripe Checkout Session Creation
-            const checkoutRes = await fetch('/api/checkout', {
+            await fetch('/api/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -203,7 +203,7 @@ export function BookingModal({ isOpen, onClose, serviceName, depositAmount }: Bo
                                 {quoteLink && (
                                     <div className="tradesperson-view glass" style={{ borderColor: 'rgba(16, 185, 129, 0.3)', background: 'rgba(16, 185, 129, 0.05)' }}>
                                         <p className="tradesperson-label" style={{ color: 'var(--success-color)' }}>admin simulation: 3 days later</p>
-                                        <p className="tradesperson-desc">Simulate marking the job as "Complete" to trigger the automated WhatsApp review request flow.</p>
+                                        <p className="tradesperson-desc">Simulate marking the job as &quot;Complete&quot; to trigger the automated WhatsApp review request flow.</p>
 
                                         {!reviewLink ? (
                                             <Button
@@ -216,7 +216,7 @@ export function BookingModal({ isOpen, onClose, serviceName, depositAmount }: Bo
                                             </Button>
                                         ) : (
                                             <div className="fade-in mt-3">
-                                                <p className="text-sm text-secondary mb-2">Automated system generated this "1-click review link" sent to the customer:</p>
+                                                <p className="text-sm text-secondary mb-2">Automated system generated this &quot;1-click review link&quot; sent to the customer:</p>
                                                 <a href={reviewLink} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm btn-full" style={{ background: '#25D366' }}>
                                                     <MessageCircle size={16} className="btn-icon-left" /> View Review Prompt
                                                 </a>
