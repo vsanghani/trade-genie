@@ -10,6 +10,7 @@ export function SiteFooter() {
             }}
         >
             <p>&copy; {new Date().getFullYear()} TradeGenie. All rights reserved.</p>
+            <p>Built and manager by <a href="https://vrtxlabs.tech" target="_blank">Vrtx Labs</a></p>
         </footer>
     );
 }
